@@ -21,16 +21,24 @@ public class ServerWindow extends JFrame {
         btnStop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                isServerWorking = false;
-                System.out.println("Server stopped " + isServerWorking + "\n");
+                if (!isServerWorking) {
+                    log.append("The server has already stopped\n");
+            } else {
+                    log.append("Server stopped\n");
+                    isServerWorking = false;
+                }
             }
         });
 
         btnStart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                isServerWorking = true;
-                System.out.println("Server started " + isServerWorking + "\n");
+                if (isServerWorking) {
+                    log.append("The server is already running\n");
+                } else {
+                    log.append("Server started\n");
+                    isServerWorking = true;
+                }
             }
         });
 
@@ -38,9 +46,16 @@ public class ServerWindow extends JFrame {
         setBounds(POS_X, POS_Y, WIDTH, HEIGHT);
         setResizable(false);
         setTitle("Chat server");
-        setLayout(new GridLayout(1, 2));
-        add(btnStart);
-        add(btnStop);
+        setLayout(new BorderLayout());
+
+        JPanel topPanel = new JPanel();
+        topPanel.add(btnStart);
+        topPanel.add(btnStop);
+        add(topPanel, BorderLayout.NORTH);
+
+        log.setEditable(true);
+        JScrollPane scrollLog = new JScrollPane(log);
+        add(scrollLog, BorderLayout.CENTER);
 
         setVisible(true);
     }
