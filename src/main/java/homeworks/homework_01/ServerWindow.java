@@ -2,6 +2,9 @@ package homeworks.homework_01;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,15 +19,18 @@ public class ServerWindow extends JFrame {
     private final JTextArea log = new JTextArea();
     private boolean isServerWorking;
     private boolean isServerStopped;
+
     private final List<ClientGUI> connectedClients = new ArrayList<>();
 
     public ServerWindow() {
         isServerWorking = false;
         isServerStopped = false;
 
+        btnStop.setEnabled(false);
+
         btnStop.addActionListener(e -> {
             if (!isServerWorking) {
-                log.append("Сервер уже остановлен\n");
+                logMessage("Сервер уже остановлен");
             } else {
                 stopServer();
             }
@@ -32,7 +38,7 @@ public class ServerWindow extends JFrame {
 
         btnStart.addActionListener(e -> {
             if (isServerWorking) {
-                log.append("Сервер уже запущен\n");
+                logMessage("Сервер уже запущен");
             } else {
                 startServer();
             }
@@ -56,6 +62,25 @@ public class ServerWindow extends JFrame {
         setVisible(true);
     }
 
+    private void startServer() {
+        isServerWorking = true;
+        isServerStopped = false;
+        btnStart.setEnabled(false);
+        btnStop.setEnabled(true);
+        logMessage("Сервер запущен");
+    }
+
+    public void stopServer() {
+        isServerStopped = true;
+        isServerWorking = false;
+        btnStart.setEnabled(true);
+        btnStop.setEnabled(false);
+        for (ClientGUI client : connectedClients) {
+            client.disconnect();
+        }
+        logMessage("Сервер остановлен. Все клиенты отключены");
+    }
+
     public boolean isServerRunning() {
         return isServerWorking;
     }
@@ -66,21 +91,7 @@ public class ServerWindow extends JFrame {
 
     public void logMessage(String message) {
         log.append(message + "\n");
-    }
-
-    public void startServer() {
-        isServerStopped = false;
-        log.append("Сервер запущен\n");
-        isServerWorking = true;
-    }
-
-    public void stopServer() {
-        isServerStopped = true;
-        for (ClientGUI client : connectedClients) {
-            client.disconnect();
-        }
-        log.append("Сервер остановлен. Все клиенты отключены\n");
-        isServerWorking = false;
+        saveLogToFile(message);
     }
 
     public void addClient(ClientGUI client) {
@@ -92,13 +103,22 @@ public class ServerWindow extends JFrame {
     }
 
     public void broadcastMessage(String message, ClientGUI sender) {
-        if (!isServerStopped) {
-            log.append(message + "\n");
-            for (ClientGUI client : connectedClients) {
-                if (client != sender) {
-                    client.receiveMessage(message);
-                }
+        log.append(message + "\n");
+        for (ClientGUI client : connectedClients) {
+            if (client != sender) {
+                client.receiveMessage(message);
             }
         }
+        saveLogToFile(message);
     }
+
+    private void saveLogToFile(String message) {
+        String filePath = "src/main/java/homeworks/homework_01/log.txt";
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, true))) {
+            writer.println(message);
+        } catch (IOException e) {
+            System.err.println("Ошибка при записи в файл лога: " + e.getMessage());
+        }
+    }
+
 }
