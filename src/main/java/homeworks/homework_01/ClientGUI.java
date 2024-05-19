@@ -65,7 +65,7 @@ public class ClientGUI extends JFrame {
             if (isConnected && !serverWindow.isServerStopped()) {
                 String message = tfLogin.getText() + ": " + tfMessage.getText();
                 log.append(message + "\n");
-                serverWindow.broadcastMessage(message, this); // Передаем себя в качестве отправителя
+                serverWindow.broadcastMessage(message, this);
                 tfMessage.setText("");
             } else if (!isConnected) {
                 log.append("Вы не подключены к чату\n");
