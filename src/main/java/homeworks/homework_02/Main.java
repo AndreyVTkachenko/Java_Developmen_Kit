@@ -4,7 +4,7 @@ import homeworks.homework_02.client.ClientController;
 import homeworks.homework_02.client.ClientGUI;
 import homeworks.homework_02.server.ServerController;
 import homeworks.homework_02.server.ServerGUI;
-import homeworks.homework_02.repository.ServerRepository;
+import homeworks.homework_02.server.ServerRepository;
 
 public class Main {
     public static void main(String[] args) {

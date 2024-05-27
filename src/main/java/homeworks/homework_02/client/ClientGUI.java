@@ -1,8 +1,5 @@
 package homeworks.homework_02.client;
 
-import homeworks.homework_02.interfaces.IClientController;
-import homeworks.homework_02.interfaces.IClientView;
-
 import javax.swing.*;
 import java.awt.*;
 

@@ -1,8 +1,6 @@
 package homeworks.homework_02.client;
 
-import homeworks.homework_02.interfaces.IClientController;
-import homeworks.homework_02.interfaces.IServerController;
-import homeworks.homework_02.interfaces.IClientView;
+import homeworks.homework_02.server.IServerController;
 
 public class ClientController implements IClientController {
     private final IServerController serverController;

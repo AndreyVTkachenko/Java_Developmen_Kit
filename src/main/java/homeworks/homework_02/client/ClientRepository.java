@@ -1,6 +1,4 @@
-package homeworks.homework_02.repository;
-
-import homeworks.homework_02.interfaces.IClientRepository;
+package homeworks.homework_02.client;
 
 public class ClientRepository implements IClientRepository {
     // реализация методов работы с клиентскими данными

@@ -1,4 +1,6 @@
-package homeworks.homework_02.interfaces;
+package homeworks.homework_02.server;
+
+import homeworks.homework_02.client.IClientController;
 
 public interface IServerController {
     void startServer();

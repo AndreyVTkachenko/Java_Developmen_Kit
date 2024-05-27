@@ -1,7 +1,6 @@
-package homeworks.homework_02.repository;
+package homeworks.homework_02.server;
 
-import homeworks.homework_02.interfaces.IClientController;
-import homeworks.homework_02.interfaces.IServerRepository;
+import homeworks.homework_02.client.IClientController;
 
 import java.io.FileWriter;
 import java.io.IOException;

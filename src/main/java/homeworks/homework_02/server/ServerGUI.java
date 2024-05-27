@@ -1,8 +1,5 @@
 package homeworks.homework_02.server;
 
-import homeworks.homework_02.interfaces.IServerController;
-import homeworks.homework_02.interfaces.IServerView;
-
 import javax.swing.*;
 import java.awt.*;
 
